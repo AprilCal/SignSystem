@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import com.example.aprilcal.signsystem.Adaper.InfoItemAdapter;
 import com.example.aprilcal.signsystem.Dao.WiFiHelper;
 import com.example.aprilcal.signsystem.R;
 import java.util.ArrayList;

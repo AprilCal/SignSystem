@@ -10,8 +10,19 @@ public class Course {
     private int courseID;
     private int teacherID;
     private String courseName;
-    private Date createDate;
+    private int createDate;
     private int totalNumber;
+
+    public Course(){
+
+    }
+    public Course(int courseID, int teacherID, String courseName, int createDate, int totalNumber) {
+        this.courseID = courseID;
+        this.teacherID = teacherID;
+        this.courseName = courseName;
+        this.createDate = createDate;
+        this.totalNumber = totalNumber;
+    }
 
     public int getCourseID() {
         return courseID;
@@ -37,11 +48,11 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public Date getCreateDate() {
+    public int getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(int createDate) {
         this.createDate = createDate;
     }
 

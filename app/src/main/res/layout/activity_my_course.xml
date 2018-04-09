@@ -6,13 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    tools:context="com.example.aprilcal.signsystem.Activity.MyCourseActivity">>
+    tools:context="com.example.aprilcal.signsystem.Activity.MyCourseActivity"><![CDATA[>
 
-<SearchView
+    ]]>
+
+    <SearchView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content" >
 
-<ScrollView
+    </SearchView>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="162dp"
+        android:id="@+id/course_list_view" />
+
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

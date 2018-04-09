@@ -18,14 +18,21 @@
         android:id="@+id/start_sign_button" />
 
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:id="@+id/sign_list_view" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/sign_scroll_view">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/sign_scroll_linear_layout">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -139,228 +146,7 @@
                     android:layout_height="35dp"
                     android:layout_width="80dp" />
             </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
 
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textView"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:id="@+id/del_image6"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:layout_weight="0.07">
-
-                <TextView
-                    android:text="2018/3/30 91/87"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:gravity="center" />
-                <ImageView
-                    app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:layout_width="80dp" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

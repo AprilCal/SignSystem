@@ -1,16 +1,30 @@
 package com.example.aprilcal.signsystem.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.aprilcal.signsystem.Adaper.SignItemAdaper;
+import com.example.aprilcal.signsystem.Busi.SignBusi;
 import com.example.aprilcal.signsystem.R;
+import com.example.aprilcal.signsystem.vo.Sign;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.aprilcal.signsystem.R.id.course_list_view;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
@@ -20,6 +34,11 @@ public class CourseDetailActivity extends AppCompatActivity {
     private Button start_sign_button;
     private TextView textView11;
     private Menu menu;
+    private ListView sign_list_view;
+    private ScrollView sign_scroll_view;
+    private LinearLayout sign_scroll_linear_layout;
+    private SignItemAdaper signItemAdaper;
+    private static List<Sign> signList = new ArrayList<Sign>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +93,40 @@ public class CourseDetailActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
+        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10000,98,97));
+        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10001,98,97));
+        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10002,98,97));
+        Log.d("msg:","insert success");
+        signList = SignBusi.getAllSignByCourseID(getApplicationContext(),2);
+        signItemAdaper = new SignItemAdaper(CourseDetailActivity.this,R.layout.sign_list_item,signList);
+        sign_list_view = (ListView) findViewById(R.id.sign_list_view);
+        sign_list_view .setAdapter(signItemAdaper);
+        Toast.makeText(getApplicationContext(), String.valueOf(signList.size()), Toast.LENGTH_SHORT).show();
+        /*signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+        signList.add(new Sign(1,2,3,1000,98,97));
+*/
+        /*
+        sign_scroll_view = (ScrollView) findViewById(R.id.sign_scroll_view);
+        sign_scroll_linear_layout = (LinearLayout) findViewById(R.id.sign_scroll_linear_layout);
+        LinearLayout linearLayout1 = new LinearLayout(this);
+        linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
+        TextView textView = new TextView(this);
+        textView.setTextSize(30);
+        textView.setText("stupid");
+        textView.setGravity(Gravity.CENTER_HORIZONTAL);
+        sign_scroll_linear_layout.addView(textView);*/
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
