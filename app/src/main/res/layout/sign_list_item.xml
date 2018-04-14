@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/sign_item_linear_layout">
 
     <TextView
         android:text="2018/3/30 91/87"

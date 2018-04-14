@@ -28,6 +28,8 @@ public class SignDao {
         values.put("sign_date",sign.getSignDate());
         values.put("sign_total_number",sign.getTotalNumber());
         values.put("sign_actual_number",sign.getActualNumber());
+        values.put("backup",0);
+        values.put("deleted",0);
         db.insert("sign_table",null,values);
         return true;
     }
@@ -48,6 +50,8 @@ public class SignDao {
         int signDate;
         int totalNumber;
         int actualNumber;
+        int backup;
+        int deleted;
 
         while (cursor.moveToNext())
         {
@@ -56,7 +60,9 @@ public class SignDao {
             signDate = cursor.getInt(cursor.getColumnIndex("sign_date"));
             totalNumber = cursor.getInt(cursor.getColumnIndex("sign_total_number"));
             actualNumber = cursor.getInt(cursor.getColumnIndex("sign_actual_number"));
-            signList.add(new Sign(signID,courseID,teacherID,signDate,totalNumber,actualNumber));
+            backup = cursor.getInt(cursor.getColumnIndex("backup"));
+            deleted = cursor.getInt(cursor.getColumnIndex("deleted"));
+            signList.add(new Sign(signID,courseID,teacherID,signDate,totalNumber,actualNumber,backup,deleted));
         }
         cursor.close();
         return signList;

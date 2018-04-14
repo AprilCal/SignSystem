@@ -12,16 +12,36 @@ public class Course {
     private String courseName;
     private int createDate;
     private int totalNumber;
+    private int deleted;
+    private int backup;
 
     public Course(){
 
     }
-    public Course(int courseID, int teacherID, String courseName, int createDate, int totalNumber) {
+
+    public Course(int courseID, int teacherID, String courseName, int createDate, int totalNumber, int backup, int deleted) {
         this.courseID = courseID;
         this.teacherID = teacherID;
         this.courseName = courseName;
         this.createDate = createDate;
         this.totalNumber = totalNumber;
+        this.backup = backup;
+        this.deleted = deleted;
+    }
+    public int isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
+    }
+
+    public int isBackup() {
+        return backup;
+    }
+
+    public void setBackup(int backup) {
+        this.backup = backup;
     }
 
     public int getCourseID() {

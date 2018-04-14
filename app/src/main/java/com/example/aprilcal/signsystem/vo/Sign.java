@@ -11,18 +11,38 @@ public class Sign {
     private int signDate;
     private int totalNumber;
     private int actualNumber;
+    private int backup;
+    private int deleted;
 
     public Sign(){
 
     }
 
-    public Sign(int signID, int courseID, int teacherID, int signDate, int totalNumber, int actualNumber) {
+    public Sign(int signID, int courseID, int teacherID, int signDate, int totalNumber, int actualNumber, int backup, int deleted) {
         this.signID = signID;
         this.courseID = courseID;
         this.teacherID = teacherID;
         this.signDate = signDate;
         this.totalNumber = totalNumber;
         this.actualNumber = actualNumber;
+        this.backup = backup;
+        this.deleted = deleted;
+    }
+
+    public int getBackup() {
+        return backup;
+    }
+
+    public void setBackup(int backup) {
+        this.backup = backup;
+    }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
     }
 
     public int getTeacherID() {

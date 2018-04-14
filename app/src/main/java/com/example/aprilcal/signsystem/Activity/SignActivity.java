@@ -27,7 +27,7 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 wiFiHelper.openAp("AprilCal","123456789", getApplicationContext());
-                wiFiHelper.getConnectCount();
+                //wiFiHelper.getConnectCount();
             }
         });
         end_sign_button.setOnClickListener(new View.OnClickListener() {

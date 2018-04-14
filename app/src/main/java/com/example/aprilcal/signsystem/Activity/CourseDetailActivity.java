@@ -37,6 +37,7 @@ public class CourseDetailActivity extends AppCompatActivity {
     private ListView sign_list_view;
     private ScrollView sign_scroll_view;
     private LinearLayout sign_scroll_linear_layout;
+    private LinearLayout sign_linear_layout;
     private SignItemAdaper signItemAdaper;
     private static List<Sign> signList = new ArrayList<Sign>();
 
@@ -93,28 +94,19 @@ public class CourseDetailActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
-        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10000,98,97));
-        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10001,98,97));
-        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10002,98,97));
-        Log.d("msg:","insert success");
+        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10000,98,97,0,0));
+        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10001,98,97,0,0));
+        SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10002,98,97,0,0));
         signList = SignBusi.getAllSignByCourseID(getApplicationContext(),2);
         signItemAdaper = new SignItemAdaper(CourseDetailActivity.this,R.layout.sign_list_item,signList);
         sign_list_view = (ListView) findViewById(R.id.sign_list_view);
         sign_list_view .setAdapter(signItemAdaper);
         Toast.makeText(getApplicationContext(), String.valueOf(signList.size()), Toast.LENGTH_SHORT).show();
-        /*signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-        signList.add(new Sign(1,2,3,1000,98,97));
-*/
+
+
+        //sign_linear_layout = (LinearLayout)findViewById(R.id.sign_linear_layout);
+        //sign_linear_layout.addView((LinearLayout)findViewById(R.id.sign_item_linear_layout));
+
         /*
         sign_scroll_view = (ScrollView) findViewById(R.id.sign_scroll_view);
         sign_scroll_linear_layout = (LinearLayout) findViewById(R.id.sign_scroll_linear_layout);

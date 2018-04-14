@@ -11,12 +11,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.aprilcal.signsystem.Activity.CourseDetailActivity">
+
     <Button
         android:text="开始签到"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:id="@+id/start_sign_button" />
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="145dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/sign_linear_layout" />
+    </ScrollView>
 
     <ListView
         android:layout_width="match_parent"

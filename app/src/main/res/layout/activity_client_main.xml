@@ -21,9 +21,16 @@ android:weightSum="1">
     />
 
     <ListView
+        android:layout_width="match_parent"
+        android:layout_height="103dp"
+        android:id="@+id/previous_wifi_list_view"
+        android:visibility="invisible"
+        android:layout_weight="0.93" />
+
+    <ListView
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:id="@+id/wifi_listview"
+    android:layout_height="228dp"
+    android:id="@+id/wifi_list_view"
     android:visibility="invisible" />
 
     <LinearLayout

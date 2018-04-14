@@ -17,14 +17,18 @@ class DBHelper extends SQLiteOpenHelper {
             +"course_name text not null,"
             +"teacher_id integer not null,"
             +"course_create_date integer not null,"
-            +"course_total_number integer not null)";
+            +"course_total_number integer not null,"
+            +"backup integer not null,"
+            +"deleted integer not null)";
     private static final String CREATE_SIGN_TABLE = "create table sign_table ("
             +"sign_id integer primary key autoincrement,"
             +"course_id integer not null,"
             +"teacher_id integer not null,"
             +"sign_date integer not null,"
             +"sign_total_number integer not null,"
-            +"sign_actual_number integer not null)";
+            +"sign_actual_number integer not null,"
+            +"backup integer not null,"
+            +"deleted integer not null)";
 
     private static final String IF_COURSE_TABLE_EXIST = "";
     private static final String IF_DATABASE_EXIST = "";
