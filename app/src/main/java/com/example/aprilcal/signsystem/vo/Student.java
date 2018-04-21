@@ -7,8 +7,8 @@ package com.example.aprilcal.signsystem.vo;
 public class Student {
     // system ID, allocated by system.
     private int ID;
-    // student ID, filled by student.
-    private int studentID;
+    // school ID, filled by student.
+    private int schoolID;
     private String studentName;
     private String school;
     private String phoneNumber;
@@ -56,11 +56,11 @@ public class Student {
     }
 
     public int getStudentID() {
-        return studentID;
+        return schoolID;
     }
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
+    public void setStudentID(int schoolID) {
+        this.schoolID= schoolID;
     }
 
     public String getStudentName() {

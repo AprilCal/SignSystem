@@ -13,8 +13,14 @@ import java.util.List;
  */
 
 public class SignBusi {
-    public static boolean sign(Context context, Sign sign){
+    public static int sign(Context context, Sign sign){
         return SignDao.insert(context,sign);
+    }
+
+    //TODO
+    public static boolean endSign(Context context, int signID, int actualNumber){
+        //return SignDao
+        return true;
     }
 
     public static List<Sign> getAllSignByCourseID(Context context, int courseID){

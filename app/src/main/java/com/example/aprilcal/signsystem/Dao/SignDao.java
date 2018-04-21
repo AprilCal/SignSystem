@@ -19,7 +19,7 @@ import java.util.List;
 public class SignDao {
     private static String DBName = "signDB";
 
-    public static boolean insert(Context context, Sign sign){
+    public static int insert(Context context, Sign sign){
         DBHelper dbHelper = new DBHelper(context,DBName,null,1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -31,6 +31,21 @@ public class SignDao {
         values.put("backup",0);
         values.put("deleted",0);
         db.insert("sign_table",null,values);
+
+        String queryID = "select last_insert_rowid() from " + "sign_table";
+        Cursor cursor = db.rawQuery(queryID, null);
+
+        int ID = -1;
+        if(cursor.moveToFirst()){
+            ID = cursor.getInt(0);
+        }
+        Log.d("auto id",String.valueOf(ID));
+        return ID;
+    }
+
+    //TODO implement update operation;
+    public static boolean updateActualNumber(Context context, int signID, int actualNumber){
+
         return true;
     }
 

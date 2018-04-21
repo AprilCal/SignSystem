@@ -22,8 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aprilcal.signsystem.Adaper.InfoItemAdapter;
+import com.example.aprilcal.signsystem.Client.ConnectThread;
 import com.example.aprilcal.signsystem.Dao.WiFiHelper;
 import com.example.aprilcal.signsystem.R;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +54,8 @@ public class ClientMainActivity extends AppCompatActivity {
             List<ScanResult> wifilist = wiFiHelper.getScanResults();
             linkInfos.clear();
             for(ScanResult i : wifilist){
-                linkInfos.add(new LinkInfo(i.SSID.toString()));
+                linkInfos.add(new LinkInfo(i.SSID,i.capabilities));
+                Log.d(i.SSID.toString(),i.capabilities.toString());
             }
             infoItemAdapter.notifyDataSetChanged();
         }
@@ -89,6 +96,20 @@ public class ClientMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "请稍后", Toast.LENGTH_SHORT).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String serverIP = wiFiHelper.getServerIP();
+                            Log.d("server ip:",serverIP);
+                            Socket socket = new Socket(serverIP, 12345);
+                            ConnectThread connectThread = new ConnectThread(socket,"i am student",getApplicationContext());
+                            connectThread.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
 
@@ -125,6 +146,7 @@ public class ClientMainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WifiConfiguration config = wiFiHelper.isExsits(linkInfos.get((int) id).getWifi_name());
+                Log.d(linkInfos.get((int)id).getWifi_name(), linkInfos.get((int)id).getCapabilities());
                 if(config == null){
                     //TODO refactor dialog;
                     String password = showInputDialog();
@@ -134,7 +156,21 @@ public class ClientMainActivity extends AppCompatActivity {
                 {
                     //TODO abstract a sign operation;
                     if(wiFiHelper.connect(config)){
-                        Toast.makeText(getApplicationContext(), "签到成功", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "签到成功", Toast.LENGTH_SHORT).show();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    String serverIP = wiFiHelper.getServerIP();
+                                    Log.d("server ip:",serverIP);
+                                    Socket socket = new Socket(serverIP, 1234);
+                                    ConnectThread connectThread = new ConnectThread(socket,"i am student",getApplicationContext());
+                                    connectThread.start();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                     }
                     else{
                         Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();

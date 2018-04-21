@@ -1,17 +1,24 @@
 package com.example.aprilcal.signsystem.Dao;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.DhcpInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,7 +81,7 @@ public class WiFiHelper {
      * @return
      */
     public void scanWiFi(){
-        open();
+        //open();
         LocationManager locManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             //TODO remove context;
@@ -109,26 +116,25 @@ public class WiFiHelper {
         WifiConfiguration config = new WifiConfiguration();
         config.SSID = "AprilCal";
         config.networkId = 1;
-        config.allowedAuthAlgorithms.clear();
+        /*config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
         config.allowedKeyManagement.clear();
         config.allowedPairwiseCiphers.clear();
-        config.allowedProtocols.clear();
+        config.allowedProtocols.clear();*/
 
 
         config.preSharedKey = "123456789";
-        config.hiddenSSID = true;
+        config.hiddenSSID = false;
         config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-        ConnectivityManager connectivityManager;
         /*
             This was stupid;
             KeyMgmt was hidden & WPA2_PSK = 4;
             Under MIUI, WPA2_PSK is of value 6;
             STUPID
          */
+        //config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
         config.allowedKeyManagement.set(6);
-        //wcfg.allowedKeyManagement.set(4);
         config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
         config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
@@ -154,7 +160,7 @@ public class WiFiHelper {
             method1.invoke(wifiManager, null, true);
             //vThread.sleep(200);
         } catch (Exception e) {
-            Log.e("wifi:", e.getMessage());
+            //Log.e("wifi:", e.getMessage());
             return false;
         }
 
@@ -247,8 +253,11 @@ public class WiFiHelper {
         WifiConfiguration config = new WifiConfiguration();
         config.SSID = "\""+SSID+"\"";
         config.preSharedKey = "\""+"123456789"+"\"";
+        wifiManager.addNetwork(config);
+        wifiManager.saveConfiguration();
         return true;
     }
+
     /**
      * Connect to a wifi with configuration;
      * return true on success;
@@ -260,5 +269,52 @@ public class WiFiHelper {
         wifiManager.disconnect();
         wifiManager.enableNetwork(config.networkId,true);
         return true;
+    }
+
+    /**
+     * Return gateway ip address;
+     * @return
+     */
+    public String getServerIP(){
+        //WifiInfo wifiinfo = wifiManager.getConnectionInfo();
+        //Log.d("Wifi info----->",Formatter.formatIpAddress(wifiinfo.getIpAddress()));
+        //System.out.println("DHCP info gateway----->" + Formatter.formatIpAddress(dhcpInfo.gateway));
+        //System.out.println("DHCP info netmask----->" + Formatter.formatIpAddress(dhcpInfo.netmask));
+        //DhcpInfo中的ipAddress是一个int型的变量，通过Formatter将其转化为字符串IP地址
+        //String routeIp = Formatter.formatIpAddress(dhcpInfo.gateway);
+        //Log.d("", "wifi route ip：" + routeIp);
+        //TODO modify this deprecated functhion;
+        //wifiManager.getConnectionInfo();
+        if(wifiManager.getDhcpInfo()==null){
+            Log.d("dhcpinfo:","null");
+        }
+
+        Log.d("gateway int:",String.valueOf(wifiManager.getDhcpInfo().gateway));
+        while (wifiManager.getConnectionInfo().getIpAddress() == 0) {
+            Log.d("waiting", "waiting for valid ip");
+        }
+        Log.d("ip:",Formatter.formatIpAddress(wifiManager.getDhcpInfo().ipAddress));
+        return Formatter.formatIpAddress(wifiManager.getDhcpInfo().gateway);
+    }
+
+    //TODO remove this function;
+    public ArrayList<String> getConnectedIP() {
+        ArrayList<String> connectedIP = new ArrayList<String>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("/proc/net/arp"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Splitted by more than one space;
+                String[] splitted = line.split(" +");
+                if (splitted != null && splitted.length >= 4) {
+                    String ip = splitted[0];
+                    connectedIP.add(ip);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.d("ip:",String.valueOf(connectedIP.size()));
+        return connectedIP;
     }
 }

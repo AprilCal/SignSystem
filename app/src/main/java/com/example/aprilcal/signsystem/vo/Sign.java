@@ -18,6 +18,16 @@ public class Sign {
 
     }
 
+    public Sign(int courseID, int teacherID, int signDate, int totalNumber, int actualNumber, int backup, int deleted) {
+        this.courseID = courseID;
+        this.teacherID = teacherID;
+        this.signDate = signDate;
+        this.totalNumber = totalNumber;
+        this.actualNumber = actualNumber;
+        this.backup = backup;
+        this.deleted = deleted;
+    }
+
     public Sign(int signID, int courseID, int teacherID, int signDate, int totalNumber, int actualNumber, int backup, int deleted) {
         this.signID = signID;
         this.courseID = courseID;

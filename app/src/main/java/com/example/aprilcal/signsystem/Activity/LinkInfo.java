@@ -5,6 +5,14 @@ package com.example.aprilcal.signsystem.Activity;
  */
 
 public class LinkInfo {
+    private String wifi_name;
+    private String capabilities;
+
+    public LinkInfo(String wifi_name,String capabilities) {
+        this.wifi_name = wifi_name;
+        this.capabilities = capabilities;
+    }
+
     public String getWifi_name() {
         return wifi_name;
     }
@@ -13,9 +21,11 @@ public class LinkInfo {
         this.wifi_name = wifi_name;
     }
 
-    private String wifi_name;
+    public String getCapabilities() {
+        return capabilities;
+    }
 
-    public LinkInfo(String wifi_name) {
-        this.wifi_name=wifi_name;
+    public void setCapabilities(String capabilities) {
+        this.capabilities = capabilities;
     }
 }

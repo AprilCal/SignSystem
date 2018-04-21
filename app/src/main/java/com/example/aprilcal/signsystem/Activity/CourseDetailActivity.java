@@ -2,6 +2,7 @@ package com.example.aprilcal.signsystem.Activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.wifi.WifiConfiguration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,9 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.aprilcal.signsystem.Adaper.SignItemAdaper;
 import com.example.aprilcal.signsystem.Busi.SignBusi;
+import com.example.aprilcal.signsystem.Client.ConnectThread;
 import com.example.aprilcal.signsystem.R;
 import com.example.aprilcal.signsystem.vo.Sign;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +107,15 @@ public class CourseDetailActivity extends AppCompatActivity {
         sign_list_view = (ListView) findViewById(R.id.sign_list_view);
         sign_list_view .setAdapter(signItemAdaper);
         Toast.makeText(getApplicationContext(), String.valueOf(signList.size()), Toast.LENGTH_SHORT).show();
+
+        //TODO remove this listener;
+        sign_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("selected id",String.valueOf(signList.get((int)id).getSignID()));
+
+            }
+        });
 
 
         //sign_linear_layout = (LinearLayout)findViewById(R.id.sign_linear_layout);

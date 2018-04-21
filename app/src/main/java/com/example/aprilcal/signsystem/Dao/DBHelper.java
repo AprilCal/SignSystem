@@ -29,6 +29,10 @@ class DBHelper extends SQLiteOpenHelper {
             +"sign_actual_number integer not null,"
             +"backup integer not null,"
             +"deleted integer not null)";
+    private static final String CREATE_SIGN_ITEM_TABLE = "create table sign_item_table ("
+            +"sign_item_id integer primary key autoincrement,"
+            +"sign_id integer not null,"
+            +"student_id integer not null)";
 
     private static final String IF_COURSE_TABLE_EXIST = "";
     private static final String IF_DATABASE_EXIST = "";
