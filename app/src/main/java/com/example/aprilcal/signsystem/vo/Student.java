@@ -8,7 +8,7 @@ public class Student {
     // system ID, allocated by system.
     private int ID;
     // school ID, filled by student.
-    private int schoolID;
+    private String schoolID;
     private String studentName;
     private String school;
     private String phoneNumber;
@@ -55,11 +55,11 @@ public class Student {
         this.school = school;
     }
 
-    public int getStudentID() {
+    public String getStudentID() {
         return schoolID;
     }
 
-    public void setStudentID(int schoolID) {
+    public void setStudentID(String schoolID) {
         this.schoolID= schoolID;
     }
 

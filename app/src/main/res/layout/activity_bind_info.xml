@@ -31,7 +31,8 @@ android:orientation="vertical">
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_weight="1"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:id="@+id/bind_info_student_name_edit_text" />
 </LinearLayout>
 
 <LinearLayout
@@ -54,7 +55,8 @@ android:orientation="vertical">
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_weight="1"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:id="@+id/bind_info_school_id_edit_text" />
 </LinearLayout>
 
 <LinearLayout
@@ -69,7 +71,7 @@ android:orientation="vertical">
         android:textSize="24sp"
         android:textAlignment="center"
         android:gravity="center"
-        android:text="其他信息" />
+        android:text="学校" />
 
     <EditText
         android:layout_width="match_parent"
@@ -77,18 +79,19 @@ android:orientation="vertical">
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_weight="1"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:id="@+id/bind_info_school_name_edit_text" />
 </LinearLayout>
 
 <Button
     android:text="绑定信息"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/bind_button" />
+    android:id="@+id/bind_info_bind_button" />
 
 <Button
     android:text="取消"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/bind_cancel_button" />
+    android:id="@+id/bind_info_cancel_button" />
 </LinearLayout>

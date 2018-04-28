@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.aprilcal.signsystem.Activity.LinkInfo;
@@ -21,6 +22,7 @@ import static com.example.aprilcal.signsystem.Activity.ClientMainActivity.linkIn
 public class CourseDao {
     //TODO: DBName configuration
     private static String DBName = "signDB";
+    private static String tableName = "course_table";
 
     /**
      * default value of backup & deleted is false;
@@ -28,7 +30,7 @@ public class CourseDao {
      * @param course
      * @return
      */
-    public static boolean insert(Context context, Course course){
+    public static int insert(Context context, Course course){
         DBHelper dbHelper = new DBHelper(context,DBName,null,1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -39,16 +41,43 @@ public class CourseDao {
         values.put("backup",0);
         values.put("deleted",0);
         db.insert("course_table",null,values);
-        return true;
+
+        String queryID = "select last_insert_rowid() from " + tableName;
+        Cursor cursor = db.rawQuery(queryID, null);
+
+        int ID = -1;
+        if(cursor.moveToFirst()){
+            ID = cursor.getInt(0);
+        }
+        return ID;
     }
 
     /**
      * Do not delete an item physically.
+     * Return true on success and false on failed;
      * @param context
      * @param courseID
      * @return
      */
     public static boolean delete(Context context, int courseID){
+        DBHelper dbHelper = new DBHelper(context,DBName,null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("deleted", 1);
+        if(db.update(tableName, values, "course_id = ?", new String[] { String.valueOf(courseID) })>0){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * TODO implement;
+     * Physically remove a course record by courseID;
+     * @param context
+     * @param courseID
+     * @return
+     */
+    public static boolean physicallyDelete(Context context, int courseID){
         return true;
     }
 
@@ -63,7 +92,7 @@ public class CourseDao {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List <Course> courseList = new ArrayList<Course>();
 
-        Cursor cursor = db.query("course_table",null,null,null,null,null,null);
+        Cursor cursor = db.query("course_table",null,"deleted = ?",new String[] { "0" },null,null,null);
         int course_id;
         String course_name;
         int teacher_id;

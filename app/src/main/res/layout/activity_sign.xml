@@ -14,7 +14,7 @@
         android:text="数据结构 2018/3/29"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView7"
+        android:id="@+id/sign_detail_title_text_view"
         android:layout_weight="0.13"
         android:gravity="center"
         android:textAlignment="center"
@@ -39,7 +39,8 @@
             android:layout_weight="0.13"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:id="@+id/sign_detail_total_number_text_view" />
 
     </LinearLayout>
     <LinearLayout
@@ -63,7 +64,8 @@
             android:layout_weight="0.13"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:id="@+id/sign_detail_actual_number_text_view" />
 
     </LinearLayout>
 

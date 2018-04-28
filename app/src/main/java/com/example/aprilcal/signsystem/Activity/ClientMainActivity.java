@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -20,14 +21,10 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.aprilcal.signsystem.Adaper.InfoItemAdapter;
 import com.example.aprilcal.signsystem.Client.ConnectThread;
 import com.example.aprilcal.signsystem.Dao.WiFiHelper;
 import com.example.aprilcal.signsystem.R;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -79,7 +76,26 @@ public class ClientMainActivity extends AppCompatActivity {
         sign_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "签到成功", Toast.LENGTH_SHORT).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String serverIP = wiFiHelper.getServerIP();
+                            Log.d("server ip:",serverIP);
+                            Socket socket = new Socket(serverIP, 12345);
+                            SharedPreferences sp = getSharedPreferences("identity", MODE_PRIVATE);
+                            String schoolID = sp.getString("schoolID","");
+                            String studentID = String.valueOf(sp.getInt("studetnID",0));
+                            String studetnName = sp.getString("studentName","");
+                            String signInfo =  studentID+","+schoolID+","+studetnName;
+                            Log.d("sign info",signInfo);
+                            ConnectThread connectThread = new ConnectThread(socket, signInfo,getApplicationContext());
+                            connectThread.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
 
@@ -103,7 +119,9 @@ public class ClientMainActivity extends AppCompatActivity {
                             String serverIP = wiFiHelper.getServerIP();
                             Log.d("server ip:",serverIP);
                             Socket socket = new Socket(serverIP, 12345);
-                            ConnectThread connectThread = new ConnectThread(socket,"i am student",getApplicationContext());
+                            SharedPreferences sp = getSharedPreferences("identity", MODE_PRIVATE);
+                            String signInfo = String.valueOf(sp.getString("schoolID",""));
+                            ConnectThread connectThread = new ConnectThread(socket,signInfo,getApplicationContext());
                             connectThread.start();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -163,7 +181,7 @@ public class ClientMainActivity extends AppCompatActivity {
                                 try {
                                     String serverIP = wiFiHelper.getServerIP();
                                     Log.d("server ip:",serverIP);
-                                    Socket socket = new Socket(serverIP, 1234);
+                                    Socket socket = new Socket(serverIP, 12345);
                                     ConnectThread connectThread = new ConnectThread(socket,"i am student",getApplicationContext());
                                     connectThread.start();
                                 } catch (IOException e) {

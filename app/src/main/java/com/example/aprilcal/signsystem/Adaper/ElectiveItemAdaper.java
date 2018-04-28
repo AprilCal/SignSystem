@@ -1,42 +1,37 @@
 package com.example.aprilcal.signsystem.Adaper;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.aprilcal.signsystem.R;
-import com.example.aprilcal.signsystem.vo.Sign;
-import java.sql.Date;
+import com.example.aprilcal.signsystem.vo.Elective;
 import java.util.List;
 
 /**
- * Created by AprilCal on 2018/4/9.
+ * Created by AprilCal on 2018/4/24.
  */
 
-public class SignItemAdaper extends ArrayAdapter<Sign> {
+public class ElectiveItemAdaper extends ArrayAdapter<Elective> {
     private int resourceId;
 
-    public SignItemAdaper(Context context, int resource, List<Sign> objects) {
+    public ElectiveItemAdaper(Context context, int resource, List<Elective> objects) {
         super(context, resource, objects);
         resourceId = resource;
     }
 
     @Override
     public View getView(int positon, View convertView, ViewGroup parent){
-        Sign sign = getItem(positon);
+        Elective elective = getItem(positon);
         View view;
         ViewHolder viewHolder;
         if(convertView==null)
         {
             view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.textView = (TextView)view.findViewById(R.id.sign_item_text_view);
+            viewHolder.textView = (TextView)view.findViewById(R.id.elective_list_text_view);
             view.setTag(viewHolder);
         }
         else
@@ -44,14 +39,10 @@ public class SignItemAdaper extends ArrayAdapter<Sign> {
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.textView.setText(String.valueOf(new Date(sign.getSignDate()))+" "+sign.getTotalNumber()+"/"+sign.getActualNumber());
-        /*viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("del imagine","click");
 
-            }
-        });*/
+        if(elective.getStudentName()!=null){
+            viewHolder.textView.setText(elective.getSchoolID()+"  "+elective.getStudentName());
+        }
         return view;
     }
 }

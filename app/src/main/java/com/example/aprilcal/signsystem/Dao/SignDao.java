@@ -39,7 +39,6 @@ public class SignDao {
         if(cursor.moveToFirst()){
             ID = cursor.getInt(0);
         }
-        Log.d("auto id",String.valueOf(ID));
         return ID;
     }
 
@@ -54,12 +53,13 @@ public class SignDao {
     }
 
     //TODO refactor, return null when signList is empty;
+
     public static List<Sign> selectAllSignByCourseID(Context context,int courseID){
         DBHelper dbHelper = new DBHelper(context,DBName,null,1);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         List <Sign> signList = new ArrayList<Sign>();
 
-        Cursor cursor = db.query("sign_table",null,null,null,null,null,null);
+        Cursor cursor = db.query("sign_table",null,"deleted = ? and course_id = ?", new String[] { "0" , String.valueOf(courseID) },null,null,null);
         int signID;
         int teacherID;
         int signDate;

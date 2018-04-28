@@ -17,7 +17,7 @@
         android:gravity="center" />
     <ImageView
         app:srcCompat="@android:drawable/ic_menu_delete"
-        android:id="@+id/del_image3"
+        android:id="@+id/sign_list_del_image_view"
         android:layout_gravity="center"
         android:layout_height="35dp"
         android:layout_width="80dp" />

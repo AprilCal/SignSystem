@@ -62,7 +62,6 @@ public class ConnectThread extends Thread {
             while (true) {
                 bytes = inputStream.read(buffer);
                 if (bytes > 0) {
-                    Log.d("receive",new String(buffer));
                     final byte[] data = new byte[bytes];
                     System.arraycopy(buffer, 0, data, 0, bytes);
                     String answer = new String(data);
@@ -79,9 +78,8 @@ public class ConnectThread extends Thread {
                     final byte[] data = new byte[bytes];
                     System.arraycopy(buffer, 0, data, 0, bytes);
                     String answer = new String(data);
-                    Toast.makeText(context.getApplicationContext(), answer, Toast.LENGTH_SHORT).show();
+                    Log.d("answer",answer);
                     if(answer.equals("success")){
-                        Toast.makeText(context.getApplicationContext(), "sign success", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }

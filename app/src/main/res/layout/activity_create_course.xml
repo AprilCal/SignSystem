@@ -82,13 +82,7 @@
     </LinearLayout>
 
     <Button
-        android:text="添加人员名单"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_list_button" />
-
-    <Button
-        android:text="创建课程"
+        android:text="下一步"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/create_course_button" />

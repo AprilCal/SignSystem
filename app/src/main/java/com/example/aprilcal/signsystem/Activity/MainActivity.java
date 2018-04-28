@@ -1,6 +1,7 @@
 package com.example.aprilcal.signsystem.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 if(teacher_radiobutton.isChecked())
                 {
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                    SharedPreferences sp = getSharedPreferences("identity",MODE_PRIVATE);
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putInt("teacherID",1);
+                    edit.commit();
+
                     Intent in = new Intent();
                     in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.ServerMainActivity");
                     startActivity(in);
@@ -51,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+                    SharedPreferences sp = getSharedPreferences("identity",MODE_PRIVATE);
+                    SharedPreferences.Editor edit = sp.edit();
+                    //TODO data resourse;
+                    edit.putInt("studentID",1);
+                    edit.putString("schoolID","0121410870922");
+                    edit.putString("studentName","王承禹");
+                    edit.putString("tel","15527358829");
+                    edit.putString("mail","747998045@qq.com");
+                    edit.commit();
                     Intent in = new Intent();
                     in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.ClientMainActivity");
                     startActivity(in);

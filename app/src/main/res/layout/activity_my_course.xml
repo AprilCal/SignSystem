@@ -18,104 +18,16 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="162dp"
-        android:id="@+id/course_list_view" />
+        android:layout_height="273dp"
+        android:id="@+id/course_list_view"
+        android:divider="@null"
+        android:layout_weight="0.89" />
 
-    <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:id="@+id/creat_view"
+        android:layout_weight="0.05" />
 
-        <TextView
-            android:text="数据结构(只有这个可点击)"
-            android:layout_width="match_parent"
-            android:id="@+id/course_detial_text1"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-
-        <TextView
-            android:text="编译原理"
-            android:layout_width="match_parent"
-            android:id="@+id/course_detial_text2"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-        <TextView
-            android:text="计算机组成原理"
-            android:layout_width="match_parent"
-            android:id="@+id/course_detial_text3"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-        <TextView
-            android:text="软件工程"
-            android:layout_width="match_parent"
-            android:id="@+id/course_detial_text4"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-        <TextView
-            android:text="嵌入式原理"
-            android:layout_width="match_parent"
-            android:id="@+id/course_detial_text5"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-        <TextView
-            android:text="高等数学"
-            android:layout_width="match_parent"
-            android:id="@+id/course_detial_text6"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-        <TextView
-            android:text="高等数学"
-            android:layout_width="match_parent"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-        <TextView
-            android:text="高等数学"
-            android:layout_width="match_parent"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-        <TextView
-            android:text="高等数学"
-            android:layout_width="match_parent"
-            android:layout_weight="0.05"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_height="80dp" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:srcCompat="@android:drawable/ic_menu_add"
-            android:id="@+id/creat_view"
-            android:layout_weight="0.05" />
-
-    </LinearLayout>
-</ScrollView>
 </LinearLayout>

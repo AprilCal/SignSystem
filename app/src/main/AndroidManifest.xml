@@ -7,11 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.pemissions.OVERRIDE_WIFI_CONFIG"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.pemissions.OVERRIDE_WIFI_CONFIG" />
 
     <application
         android:allowBackup="true"
@@ -34,7 +34,9 @@
         <activity android:name=".Activity.CreateCourseActivity" />
         <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".Activity.SignActivity" />
-        <activity android:name=".Activity.SignDetailActivity"></activity>
+        <activity android:name=".Activity.SignDetailActivity" />
+        <activity android:name=".Activity.AddStudent" />
+        <activity android:name=".Activity.AddStudentActivity"></activity>
     </application>
 
 </manifest>

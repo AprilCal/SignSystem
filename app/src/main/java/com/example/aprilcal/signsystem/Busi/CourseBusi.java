@@ -13,7 +13,14 @@ import java.util.List;
  */
 
 public class CourseBusi {
-    public static boolean createCourse(Context context, Course course){
+
+    /**
+     *
+     * @param context
+     * @param course
+     * @return value of last insert row id;
+     */
+    public static int createCourse(Context context, Course course){
         return CourseDao.insert(context,course);
     }
 

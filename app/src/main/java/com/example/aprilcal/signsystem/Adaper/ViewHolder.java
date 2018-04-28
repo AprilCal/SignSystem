@@ -1,5 +1,6 @@
 package com.example.aprilcal.signsystem.Adaper;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -9,4 +10,5 @@ import android.widget.TextView;
 public class ViewHolder
 {
     public TextView textView;
+    public ImageView imageView;
 }

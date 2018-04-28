@@ -1,7 +1,9 @@
 package com.example.aprilcal.signsystem.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,13 +34,26 @@ public class CreateCourseActivity extends AppCompatActivity {
         create_course_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Course course = new Course();
-                course.setCourseName(course_name_edit_text.getText().toString());
-                course.setTeacherID(1);
-                course.setCreateDate(1000);
-                course.setTotalNumber(Integer.valueOf(course_total_number_edit_text.getText().toString()));
-                if(CourseBusi.createCourse(getApplicationContext(),course)){
-                    Toast.makeText(getApplicationContext(), "创建成功", Toast.LENGTH_SHORT).show();
+                if(course_name_edit_text.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "课程名称不可以为空", Toast.LENGTH_SHORT).show();
+                }
+                else if(course_total_number_edit_text.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "请输入课程人数", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Course course = new Course();
+                    course.setCourseName(course_name_edit_text.getText().toString());
+                    course.setTeacherID(1);
+                    course.setCreateDate(1000);
+                    course.setTotalNumber(Integer.valueOf(course_total_number_edit_text.getText().toString()));
+                    //TODO modify insert;
+                    int courseID = CourseBusi.createCourse(getApplicationContext(),course);
+                    Intent in = new Intent();
+                    in.putExtra("courseID",courseID);
+                    Toast.makeText(getApplicationContext(), "课程创建成功，添加人员名单", Toast.LENGTH_SHORT).show();
+                    in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.AddStudentActivity");
+                    startActivity(in);
+                    finish();
                 }
             }
         });
