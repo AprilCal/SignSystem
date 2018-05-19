@@ -13,6 +13,7 @@ import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,6 +26,9 @@ import com.example.aprilcal.signsystem.Adaper.InfoItemAdapter;
 import com.example.aprilcal.signsystem.Client.ConnectThread;
 import com.example.aprilcal.signsystem.Dao.WiFiHelper;
 import com.example.aprilcal.signsystem.R;
+
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -34,11 +38,11 @@ public class ClientMainActivity extends AppCompatActivity {
     public static List<LinkInfo> linkInfos = new ArrayList<LinkInfo>();
     private Switch wifi_switch;
     private ListView wifi_list_view;
-    private ListView previous_wifi_list_view;
+    private TextView student_exit_text_view;
+    private TextView student_history_sign_text_view;
+    private TextView student_bind_info_text_view;
 
     private Button sign_button;
-    private Button info_button;
-    private Button history_sign_button;
     private InfoItemAdapter infoItemAdapter;
 
     private WiFiHelper wiFiHelper;
@@ -70,8 +74,25 @@ public class ClientMainActivity extends AppCompatActivity {
         registerReceiver(receiver, intentFilter);
 
         sign_button = (Button) findViewById(R.id.sign_button);
-        info_button = (Button) findViewById(R.id.info_button);
-        history_sign_button = (Button) findViewById(R.id.history_sign_button);
+        student_exit_text_view = (TextView)findViewById(R.id.student_exit_text_view);
+        student_history_sign_text_view = (TextView)findViewById(R.id.student_history_sign_text_view);
+        student_bind_info_text_view = (TextView)findViewById(R.id.student_bind_info_text_view);
+
+        student_exit_text_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp = getSharedPreferences("identity", MODE_PRIVATE);
+                SharedPreferences.Editor edit = sp.edit();
+                //TODO remove all keys;
+                edit.remove("identity");
+                edit.commit();
+
+                Intent in = new Intent();
+                in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.MainActivity");
+                startActivity(in);
+                finish();
+            }
+        });
 
         sign_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,14 +102,12 @@ public class ClientMainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String serverIP = wiFiHelper.getServerIP();
-                            Log.d("server ip:",serverIP);
                             Socket socket = new Socket(serverIP, 12345);
                             SharedPreferences sp = getSharedPreferences("identity", MODE_PRIVATE);
                             String schoolID = sp.getString("schoolID","");
                             String studentID = String.valueOf(sp.getInt("studetnID",0));
                             String studetnName = sp.getString("studentName","");
                             String signInfo =  studentID+","+schoolID+","+studetnName;
-                            Log.d("sign info",signInfo);
                             ConnectThread connectThread = new ConnectThread(socket, signInfo,getApplicationContext());
                             connectThread.start();
                         } catch (IOException e) {
@@ -99,7 +118,7 @@ public class ClientMainActivity extends AppCompatActivity {
             }
         });
 
-        info_button.setOnClickListener(new View.OnClickListener() {
+        student_bind_info_text_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent();
@@ -108,29 +127,12 @@ public class ClientMainActivity extends AppCompatActivity {
             }
         });
 
-        history_sign_button.setOnClickListener(new View.OnClickListener() {
+        student_history_sign_text_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "请稍后", Toast.LENGTH_SHORT).show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            String serverIP = wiFiHelper.getServerIP();
-                            Log.d("server ip:",serverIP);
-                            Socket socket = new Socket(serverIP, 12345);
-                            SharedPreferences sp = getSharedPreferences("identity", MODE_PRIVATE);
-                            String signInfo = String.valueOf(sp.getString("schoolID",""));
-                            ConnectThread connectThread = new ConnectThread(socket,signInfo,getApplicationContext());
-                            connectThread.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+                Toast.makeText(getApplicationContext(), "暂时不提供此功能", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         wifi_switch = (Switch) findViewById(R.id.wifi_switch);
         wifi_switch.setOnClickListener(new View.OnClickListener() {
@@ -139,10 +141,8 @@ public class ClientMainActivity extends AppCompatActivity {
                 if (wifi_switch.isChecked()) {
                     wiFiHelper.scanWiFi();
                     wifi_list_view.setVisibility(View.VISIBLE);
-                    previous_wifi_list_view.setVisibility(View.VISIBLE);
                 } else {
                     wifi_list_view.setVisibility(View.INVISIBLE);
-                    previous_wifi_list_view.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -153,12 +153,6 @@ public class ClientMainActivity extends AppCompatActivity {
         TextView headText1 = new TextView(this);
         headText1.setText("附近的wifi");
         wifi_list_view.addHeaderView(headText1);
-
-        previous_wifi_list_view = (ListView) findViewById(R.id.previous_wifi_list_view);
-        previous_wifi_list_view.setAdapter(infoItemAdapter);
-        TextView headText2 = new TextView(this);
-        headText2.setText("连接的wifi");
-        previous_wifi_list_view.addHeaderView(headText2);
 
         wifi_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -180,7 +174,6 @@ public class ClientMainActivity extends AppCompatActivity {
                             public void run() {
                                 try {
                                     String serverIP = wiFiHelper.getServerIP();
-                                    Log.d("server ip:",serverIP);
                                     Socket socket = new Socket(serverIP, 12345);
                                     ConnectThread connectThread = new ConnectThread(socket,"i am student",getApplicationContext());
                                     connectThread.start();

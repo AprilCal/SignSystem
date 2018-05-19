@@ -11,18 +11,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.aprilcal.signsystem.Activity.SignDetailActivity"
     android:weightSum="1">
+
     <TextView
         android:text="2013/3/20"
         android:layout_width="match_parent"
-        android:layout_height="83dp"
         android:gravity="center"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_height="57dp"
+        android:id="@+id/sign_detail_title_text_view" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="83dp">
+        android:layout_height="57dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -40,12 +42,13 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="24sp"
-            android:text="87人" />
+            android:text="87人"
+            android:id="@+id/sign_detail_total_number_text_view" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="83dp">
+        android:layout_height="57dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -63,15 +66,15 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="24sp"
-            android:text="81人" />
+            android:text="81人"
+            android:id="@+id/sign_detail_actual_number_text_view" />
     </LinearLayout>
     <TextView
         android:text="以下是缺席人员名单："
         android:layout_width="match_parent"
-        android:layout_height="83dp"
+        android:layout_height="match_parent"
         android:gravity="top|center"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:id="@+id/test_text_view"
-        android:layout_weight="0.84" />
+        android:id="@+id/test_text_view" />
 </LinearLayout>

@@ -40,13 +40,17 @@ public class AddStudentActivity extends AppCompatActivity {
         add_student_add_button = (Button)findViewById(R.id.add_student_add_button);
         add_student_end_button = (Button)findViewById(R.id.add_student_end_button);
 
+        intent = getIntent();
+        courseID = intent.getIntExtra("courseID",0);
+
         electiveList = new ArrayList<Elective>();
+        electiveList = ElectiveBusi.getAllElectiveByCourseID(getApplicationContext(), courseID);
+
         electiveItemAdaper = new ElectiveItemAdaper(AddStudentActivity.this,R.layout.elective_list_item, electiveList);
         add_student_list_view.setAdapter(electiveItemAdaper);
 
 
-        intent = getIntent();
-        courseID = intent.getIntExtra("courseID",0);
+
 
         add_student_add_button.setOnClickListener(new View.OnClickListener() {
             @Override

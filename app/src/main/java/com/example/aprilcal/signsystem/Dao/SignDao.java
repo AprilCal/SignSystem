@@ -17,7 +17,8 @@ import java.util.List;
  */
 
 public class SignDao {
-    private static String DBName = "signDB";
+    private static final String DBName = "signDB";
+    private static final String tableName = "sign_table";
 
     public static int insert(Context context, Sign sign){
         DBHelper dbHelper = new DBHelper(context,DBName,null,1);
@@ -42,10 +43,15 @@ public class SignDao {
         return ID;
     }
 
-    //TODO implement update operation;
     public static boolean updateActualNumber(Context context, int signID, int actualNumber){
-
-        return true;
+        DBHelper dbHelper = new DBHelper(context,DBName,null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("sign_actual_number", actualNumber);
+        if(db.update(tableName, values, "sign_id = ?", new String[] { String.valueOf(signID) })>0){
+            return true;
+        }
+        return false;
     }
 
     public static boolean delete(Context context,int singID){
@@ -62,7 +68,7 @@ public class SignDao {
         Cursor cursor = db.query("sign_table",null,"deleted = ? and course_id = ?", new String[] { "0" , String.valueOf(courseID) },null,null,null);
         int signID;
         int teacherID;
-        int signDate;
+        long signDate;
         int totalNumber;
         int actualNumber;
         int backup;
@@ -72,7 +78,7 @@ public class SignDao {
         {
             signID = cursor.getInt(cursor.getColumnIndex("sign_id"));
             teacherID = cursor.getInt(cursor.getColumnIndex("teacher_id"));
-            signDate = cursor.getInt(cursor.getColumnIndex("sign_date"));
+            signDate = cursor.getLong(cursor.getColumnIndex("sign_date"));
             totalNumber = cursor.getInt(cursor.getColumnIndex("sign_total_number"));
             actualNumber = cursor.getInt(cursor.getColumnIndex("sign_actual_number"));
             backup = cursor.getInt(cursor.getColumnIndex("backup"));

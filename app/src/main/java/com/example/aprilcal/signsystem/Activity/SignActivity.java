@@ -5,10 +5,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.aprilcal.signsystem.Busi.ElectiveBusi;
 import com.example.aprilcal.signsystem.Busi.SignBusi;
 import com.example.aprilcal.signsystem.Busi.SignInBusi;
@@ -19,7 +19,9 @@ import com.example.aprilcal.signsystem.vo.Elective;
 import com.example.aprilcal.signsystem.vo.Sign;
 import com.example.aprilcal.signsystem.vo.SignIn;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SignActivity extends AppCompatActivity {
@@ -72,8 +74,7 @@ public class SignActivity extends AppCompatActivity {
                 //wiFiHelper.openAp("AprilCal","123456789", getApplicationContext());
                 int courseID = intent.getIntExtra("courseID",0);
                 int teacherID = intent.getIntExtra("teacherID",0);
-                //TODO get int value of Date;
-                int signDate = 0;
+                long signDate = new Date().getTime();
                 int totalNumber = intent.getIntExtra("totalNumber",0);
                 int backup = 0;
                 int deleted = 0;
@@ -81,7 +82,6 @@ public class SignActivity extends AppCompatActivity {
                 ServerLintenThread serverLintenThread = new ServerLintenThread(12345,handler);
                 Thread listenThread = new Thread(serverLintenThread);
                 listenThread.start();
-                //wiFiHelper.getConnectCount();
             }
         });
 
@@ -106,6 +106,7 @@ public class SignActivity extends AppCompatActivity {
                 }
                 SignInBusi.signIn(getApplicationContext(),signInList);
                 SignInBusi.signIn(getApplicationContext(),absentList);
+                SignBusi.endSign(getApplicationContext(),signID,actualNumber);
             }
         });
     }

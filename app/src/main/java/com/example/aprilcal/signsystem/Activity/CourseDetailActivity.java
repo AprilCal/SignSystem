@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.aprilcal.signsystem.Adaper.SignItemAdaper;
+import com.example.aprilcal.signsystem.Busi.CourseBusi;
 import com.example.aprilcal.signsystem.Busi.SignBusi;
 import com.example.aprilcal.signsystem.R;
 import com.example.aprilcal.signsystem.vo.Course;
@@ -26,17 +27,9 @@ import java.util.List;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
-    private ImageView del_image1;
-    private ImageView del_image2;
-    private ImageView del_image3;
     private Button start_sign_button;
-    private TextView textView11;
     private Menu menu;
     private ListView sign_list_view;
-    private ImageView sign_list_del_image_view;
-    private ScrollView sign_scroll_view;
-    private LinearLayout sign_scroll_linear_layout;
-    private LinearLayout sign_linear_layout;
     private SignItemAdaper signItemAdaper;
     private static List<Sign> signList = new ArrayList<Sign>();
     private Course course;
@@ -59,43 +52,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
         initCourse();
 
-        del_image1 = (ImageView)findViewById(R.id.del_image1);
-        del_image2 = (ImageView)findViewById(R.id.del_image2);
-        del_image3 = (ImageView)findViewById(R.id.del_image3);
         start_sign_button = (Button)findViewById(R.id.start_sign_button);
-        textView11 = (TextView)findViewById(R.id.textView11);
-
-        del_image1.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v){
-                Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
-            }
-        });
-        del_image2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v){
-                Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
-            }
-        });
-        del_image3.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v){
-                Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
-            }
-        });
-        textView11.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent in = new Intent();
-                in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.SignDetailActivity");
-                startActivity(in);
-            }
-        });
 
         start_sign_button.setOnClickListener(new View.OnClickListener()
         {
@@ -112,16 +69,12 @@ public class CourseDetailActivity extends AppCompatActivity {
             }
         });
 
-        //SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10000,98,97,0,0));
-        //SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10001,98,97,0,0));
-        //SignBusi.sign(getApplicationContext(),new Sign(1,2,3,10002,98,97,0,0));
         signList = SignBusi.getAllSignByCourseID(getApplicationContext(),course.getCourseID());
         signItemAdaper = new SignItemAdaper(CourseDetailActivity.this,R.layout.sign_list_item,signList);
         sign_list_view = (ListView) findViewById(R.id.sign_list_view);
         sign_list_view .setAdapter(signItemAdaper);
         Toast.makeText(getApplicationContext(), String.valueOf(signList.size()), Toast.LENGTH_SHORT).show();
 
-        //TODO remove this listener;
         sign_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -130,50 +83,41 @@ public class CourseDetailActivity extends AppCompatActivity {
                 in.putExtra("courseName",course.getCourseName());
                 in.putExtra("totalNumber",course.getTotalNumber());
                 in.putExtra("signID",signList.get((int)id).getSignID());
-                Log.d("signID",String.valueOf(signList.get((int)id).getSignID()));
-                //in.putExtra("createDate",courseList.get((int)id).getCreateDate());
-                //in.putExtra("backup",courseList.get((int)id).isBackup());
+                in.putExtra("actualNumber", signList.get((int)id).getActualNumber());
+                in.putExtra("signDate", signList.get((int)id).getSignDate());
                 in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.SignDetailActivity");
                 startActivity(in);
             }
         });
-
-
-        //sign_linear_layout = (LinearLayout)findViewById(R.id.sign_linear_layout);
-        //sign_linear_layout.addView((LinearLayout)findViewById(R.id.sign_item_linear_layout));
-
-        /*
-        sign_scroll_view = (ScrollView) findViewById(R.id.sign_scroll_view);
-        sign_scroll_linear_layout = (LinearLayout) findViewById(R.id.sign_scroll_linear_layout);
-        LinearLayout linearLayout1 = new LinearLayout(this);
-        linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
-        TextView textView = new TextView(this);
-        textView.setTextSize(30);
-        textView.setText("stupid");
-        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-        sign_scroll_linear_layout.addView(textView);*/
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         /* Initialize menu item. */
-        getMenuInflater().inflate(R.menu.function_menu, menu);
+        getMenuInflater().inflate(R.menu.teacher_course_function_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.add_item:
+            case R.id.teacher_course_sync_item:
                 Toast.makeText(getApplicationContext(),"同步成功",Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.fresh_item:
+            case R.id.teacher_course_fresh_item:
                 Toast.makeText(getApplicationContext(),"刷新成功",Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.del_item:
+            case R.id.teacher_course_del_item:
+                CourseBusi.deleteCourseByCourseID(getApplicationContext(),course.getCourseID());
                 Toast.makeText(getApplicationContext(),"删除成功",Toast.LENGTH_SHORT).show();
                 finish();
+            case R.id.teacher_course_member_item:
+                Intent in = new Intent();
+                in.putExtra("courseID",course.getCourseID());
+                in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.AddStudentActivity");
+                startActivity(in);
+                return true;
             default:
                 return false;
         }

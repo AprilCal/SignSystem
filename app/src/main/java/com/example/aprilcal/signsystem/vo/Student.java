@@ -6,21 +6,47 @@ package com.example.aprilcal.signsystem.vo;
 
 public class Student {
     // system ID, allocated by system.
-    private int ID;
+    private int studentID;
     // school ID, filled by student.
     private String schoolID;
     private String studentName;
     private String school;
-    private String phoneNumber;
-    private String mailAddress;
+    private String tel;
+    private String mail;
     private String password;
 
-    public String getMailAddress() {
-        return mailAddress;
+    public String getMac() {
+        return mac;
     }
 
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress;
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    private String mac;
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public String getPassword() {
@@ -31,22 +57,6 @@ public class Student {
         this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public String getSchool() {
         return school;
     }
@@ -55,11 +65,11 @@ public class Student {
         this.school = school;
     }
 
-    public String getStudentID() {
+    public String getSchoolID() {
         return schoolID;
     }
 
-    public void setStudentID(String schoolID) {
+    public void setSchoolID(String schoolID) {
         this.schoolID= schoolID;
     }
 

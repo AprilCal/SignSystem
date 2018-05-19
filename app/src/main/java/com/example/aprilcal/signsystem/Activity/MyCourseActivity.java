@@ -3,6 +3,7 @@ package com.example.aprilcal.signsystem.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,10 +18,25 @@ import java.util.List;
 public class MyCourseActivity extends AppCompatActivity {
 
     private View create_view;
-    //private TextView course_detial_text;
     private ListView course_list_view;
     private CourseItemAdaper courseItemAdaper;
     private static List<Course> courseList = new ArrayList<Course>();
+
+    private void refreshCourseList(){
+        List<Course> newCourseList = CourseBusi.getAllCourse(this.getApplicationContext());
+        courseList.clear();
+        for(Course course : newCourseList){
+            courseList.add(course);
+        }
+        courseItemAdaper.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        refreshCourseList();
+        Log.d("onresume","invoked");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +73,6 @@ public class MyCourseActivity extends AppCompatActivity {
                 in.putExtra("backup",courseList.get((int)id).isBackup());
                 in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.CourseDetailActivity");
                 startActivity(in);
-                //CourseBusi.deleteCourse(getApplicationContext(),courseList.get((int)id).getCourseID());
             }
         });
     }

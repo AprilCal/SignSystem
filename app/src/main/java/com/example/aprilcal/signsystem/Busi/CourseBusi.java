@@ -24,7 +24,7 @@ public class CourseBusi {
         return CourseDao.insert(context,course);
     }
 
-    public static boolean deleteCourse(Context context, int courseID){
+    public static boolean deleteCourseByCourseID(Context context, int courseID){
         return CourseDao.delete(context,courseID);
     }
 

@@ -1,18 +1,16 @@
 package com.example.aprilcal.signsystem.Adaper;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.aprilcal.signsystem.R;
 import com.example.aprilcal.signsystem.vo.Sign;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -32,6 +30,11 @@ public class SignItemAdaper extends ArrayAdapter<Sign> {
         Sign sign = getItem(positon);
         View view;
         ViewHolder viewHolder;
+
+
+        long date = sign.getSignDate();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         if(convertView==null)
         {
             view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
@@ -44,14 +47,7 @@ public class SignItemAdaper extends ArrayAdapter<Sign> {
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.textView.setText(String.valueOf(new Date(sign.getSignDate()))+" "+sign.getTotalNumber()+"/"+sign.getActualNumber());
-        /*viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("del imagine","click");
-
-            }
-        });*/
+        viewHolder.textView.setText(df.format(new java.util.Date(date))+" "+sign.getTotalNumber()+"/"+sign.getActualNumber());
         return view;
     }
 }

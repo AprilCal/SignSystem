@@ -8,7 +8,7 @@ public class Sign {
     private int signID;
     private int courseID;
     private int teacherID;
-    private int signDate;
+    private long signDate;
     private int totalNumber;
     private int actualNumber;
     private int backup;
@@ -18,7 +18,7 @@ public class Sign {
 
     }
 
-    public Sign(int courseID, int teacherID, int signDate, int totalNumber, int actualNumber, int backup, int deleted) {
+    public Sign(int courseID, int teacherID, long signDate, int totalNumber, int actualNumber, int backup, int deleted) {
         this.courseID = courseID;
         this.teacherID = teacherID;
         this.signDate = signDate;
@@ -28,7 +28,7 @@ public class Sign {
         this.deleted = deleted;
     }
 
-    public Sign(int signID, int courseID, int teacherID, int signDate, int totalNumber, int actualNumber, int backup, int deleted) {
+    public Sign(int signID, int courseID, int teacherID, long signDate, int totalNumber, int actualNumber, int backup, int deleted) {
         this.signID = signID;
         this.courseID = courseID;
         this.teacherID = teacherID;
@@ -79,11 +79,11 @@ public class Sign {
         this.courseID = courseID;
     }
 
-    public int getSignDate() {
+    public long getSignDate() {
         return signDate;
     }
 
-    public void setSignDate(int signDate) {
+    public void setSignDate(long signDate) {
         this.signDate = signDate;
     }
 

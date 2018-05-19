@@ -7,9 +7,34 @@ package com.example.aprilcal.signsystem.vo;
 public class Teacher {
     private int teacherID;
     private String teacherName;
-    private String phoneNumber;
-    private String mailAddress;
+    private String tel;
+    private String school;
+    private String mail;
     private String password;
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
     public String getPassword() {
         return password;
@@ -27,14 +52,6 @@ public class Teacher {
         this.teacherID = teacherID;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getTeacherName() {
         return teacherName;
     }
@@ -43,11 +60,4 @@ public class Teacher {
         this.teacherName = teacherName;
     }
 
-    public String getMailAddress() {
-        return mailAddress;
-    }
-
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress;
-    }
 }

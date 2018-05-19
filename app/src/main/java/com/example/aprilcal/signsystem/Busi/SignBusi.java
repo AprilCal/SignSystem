@@ -1,13 +1,8 @@
 package com.example.aprilcal.signsystem.Busi;
 
 import android.content.Context;
-
 import com.example.aprilcal.signsystem.Dao.SignDao;
-import com.example.aprilcal.signsystem.Dao.SignInDao;
 import com.example.aprilcal.signsystem.vo.Sign;
-import com.example.aprilcal.signsystem.vo.SignIn;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,10 +14,8 @@ public class SignBusi {
         return SignDao.insert(context,sign);
     }
 
-    //TODO
     public static boolean endSign(Context context, int signID, int actualNumber){
-        //return SignDao
-        return true;
+        return SignDao.updateActualNumber(context, signID, actualNumber);
     }
 
     public static List<Sign> getAllSignByCourseID(Context context, int courseID){
