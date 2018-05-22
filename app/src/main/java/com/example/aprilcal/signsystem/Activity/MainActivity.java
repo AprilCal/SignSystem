@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     mHandler.sendEmptyMessageDelayed(1, 6000);
                 } else {
                     String mac = new WiFiHelper(getApplicationContext()).getMacAddress();
-                    Log.d("mac",mac);
                     NetworkHelper.StudentLoginRequest(getApplicationContext(), handler, count_text.getText().toString(), password_text.getText().toString(),mac);
                     blackDialog = DialogUtils.createLoadingDialog(MainActivity.this, "登录中...");
                     mHandler.sendEmptyMessageDelayed(1, 6000);

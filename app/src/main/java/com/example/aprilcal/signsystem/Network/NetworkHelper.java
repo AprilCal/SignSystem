@@ -28,10 +28,10 @@ import java.util.Map;
 public class NetworkHelper {
 
     //TODO modify, configuration file;
-    private static String loginUrl = "http://192.168.1.108:8080/SignSystemServer/LoginServlet";
-    private static String studentSignUpUrl = "http://192.168.1.108:8080/SignSystemServer/StudentSignUpServlet";
-    private static String teacherSignUpUrl = "http://192.168.1.108:8080/SignSystemServer/TeacherSignUpServlet";
-    private static String teacherSynchronizeUrl = "http://192.168.1.108:8080/SignSystemServer/TeacherSignUpServlet";
+    private static String loginUrl = "http://192.168.1.105:8080/SignSystemServer/LoginServlet";
+    private static String studentSignUpUrl = "http://192.168.1.105:8080/SignSystemServer/StudentSignUpServlet";
+    private static String teacherSignUpUrl = "http://192.168.1.105:8080/SignSystemServer/TeacherSignUpServlet";
+    private static String teacherSynchronizeUrl = "http://192.168.1.105:8080/SignSystemServer/TeacherSignUpServlet";
 
     public static void TeacherSignUpActivity(final Context context, final Handler handler, final Teacher teacher){
         //TODO modify address;

@@ -76,6 +76,13 @@
             android:layout_weight="1" />
 
         <Button
+            android:text="导入"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_student_import_button"
+            android:layout_weight="1" />
+
+        <Button
             android:text="完成"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
