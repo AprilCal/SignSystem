@@ -5,10 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import com.example.aprilcal.signsystem.vo.Elective;
 import com.example.aprilcal.signsystem.vo.SignIn;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +51,10 @@ public class SignInDao {
         }
     }
 
-    //TODO implement;
-    public static void delete(Context context, int signInID){
-
+    public static void deleteAllBySignID(Context context, int signID){
+        DBHelper dbHelper = new DBHelper(context,DBName,null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(tableName, "sign_id = ?", new String[]{ String.valueOf(signID)});
     }
 
     public static List<SignIn> selectAllPresentBySignID(Context context, int signID){

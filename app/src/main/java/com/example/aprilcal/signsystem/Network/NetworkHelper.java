@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.aprilcal.signsystem.Activity.MainActivity;
 import com.example.aprilcal.signsystem.Activity.SignUpActivity;
+import com.example.aprilcal.signsystem.vo.Course;
 import com.example.aprilcal.signsystem.vo.Student;
 import com.example.aprilcal.signsystem.vo.Teacher;
 import org.json.JSONException;
@@ -26,15 +27,19 @@ import java.util.Map;
  */
 
 public class NetworkHelper {
-
     //TODO modify, configuration file;
-    private static String loginUrl = "http://192.168.1.105:8080/SignSystemServer/LoginServlet";
-    private static String studentSignUpUrl = "http://192.168.1.105:8080/SignSystemServer/StudentSignUpServlet";
-    private static String teacherSignUpUrl = "http://192.168.1.105:8080/SignSystemServer/TeacherSignUpServlet";
-    private static String teacherSynchronizeUrl = "http://192.168.1.105:8080/SignSystemServer/TeacherSignUpServlet";
+    private static String loginUrl = "http://192.168.1.108:8080/SignSystemServer/LoginServlet";
+    private static String studentSignUpUrl = "http://192.168.1.108:8080/SignSystemServer/StudentSignUpServlet";
+    private static String teacherSignUpUrl = "http://192.168.1.108:8080/SignSystemServer/TeacherSignUpServlet";
+    private static String teacherSynchronizeUrl = "http://192.168.1.108:8080/SignSystemServer/TeacherSynchronizeServlet";
 
-    public static void TeacherSignUpActivity(final Context context, final Handler handler, final Teacher teacher){
-        //TODO modify address;
+    /**
+     * Teacher sign up http request
+     * @param context
+     * @param handler
+     * @param teacher
+     */
+    public static void TeacherSignUpRequest(final Context context, final Handler handler, final Teacher teacher){
         String tag = "TeacherSignUp";
         RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         requestQueue.cancelAll(tag);
@@ -52,14 +57,18 @@ public class NetworkHelper {
                                 message.what = SignUpActivity.SIGN_UP_SUCCESS;
                                 handler.sendMessage(message);
                             }
-                            // sign up failed;
+                            // user already exist;
+                            else if(result.equals("user_already_exist")){
+                                Message message = Message.obtain();
+                                message.what = SignUpActivity.USER_ALREADY_EXIST;
+                                handler.sendMessage(message);
+                            }
                             else {
                                 Message message = Message.obtain();
                                 message.what = SignUpActivity.SIGN_UP_FAILED;
                                 handler.sendMessage(message);
                             }
                         } catch (JSONException e) {
-                            //做自己的请求异常操作，如Toast提示（“无网络连接”等）
                             Log.e("TAG", e.getMessage(), e);
                         }
                     }
@@ -73,24 +82,25 @@ public class NetworkHelper {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("school", teacher.getSchool());
                 params.put("tel", teacher.getTel());
                 params.put("mail", teacher.getMail());
-                params.put("studentName", teacher.getTeacherName());
+                params.put("teacherName", teacher.getTeacherName());
+                params.put("school", teacher.getSchool());
                 params.put("password", teacher.getPassword());
                 return params;
             }
         };
-
-        //设置Tag标签
         request.setTag(tag);
-
-        //将请求添加到队列中
         requestQueue.add(request);
     }
 
+    /**
+     * Student sign up http request
+     * @param context
+     * @param handler
+     * @param student
+     */
     public static void StudentSignUpActivity(final Context context, final Handler handler, final Student student){
-        //TODO modify address;
         String tag = "SignUp";
         RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         requestQueue.cancelAll(tag);
@@ -106,6 +116,12 @@ public class NetworkHelper {
                             if (result.equals("success")) {
                                 Message message = Message.obtain();
                                 message.what = SignUpActivity.SIGN_UP_SUCCESS;
+                                handler.sendMessage(message);
+                            }
+                            // user already exist
+                            else if(result.equals("user_already_exist")){
+                                Message message = Message.obtain();
+                                message.what = SignUpActivity.USER_ALREADY_EXIST;
                                 handler.sendMessage(message);
                             }
                             // sign up failed;
@@ -144,6 +160,14 @@ public class NetworkHelper {
         requestQueue.add(request);
     }
 
+    /**
+     * Student login http request
+     * @param context
+     * @param handler
+     * @param accountNumber
+     * @param password
+     * @param mac
+     */
     public static void StudentLoginRequest(final Context context, final Handler handler, final String accountNumber, final String password, final String mac){
         String tag = "StudentLogin";
         RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
@@ -229,10 +253,100 @@ public class NetworkHelper {
         requestQueue.add(request);
     }
 
-    public static void synchronizeCourse(final Context context, final Handler handler, final String token ){
+    public static void synchronizeCourse(final Context context, final Course course, final Handler handler, final String token ){
+        String tag = "SynchronizeCourse";
+        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        requestQueue.cancelAll(tag);
+        final StringRequest request = new StringRequest(Request.Method.POST, teacherSynchronizeUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = (JSONObject) new JSONObject(response).get("params");
+                            // result = {"success"|"failed"}
+                            String result = jsonObject.getString("result");
+                            if (result.equals("success")) {
+                                Message message = Message.obtain();
+                                message.what = MainActivity.STUDENT_LOGIN_SUCCESS;
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("studentID", Integer.valueOf(jsonObject.getString("studentID")));
+                                bundle.putString("schoolID", jsonObject.getString("schoolID"));
+                                bundle.putString("studentName", jsonObject.getString("studentName"));
+                                bundle.putString("tel", jsonObject.getString("tel"));
+                                bundle.putString("mail", jsonObject.getString("mail"));
+                                bundle.putString("school", jsonObject.getString("school"));
+                                bundle.putString("token", jsonObject.getString("token"));
+                                message.setData(bundle);
+                                handler.sendMessage(message);
+                            }
+                            else if(result.equals("mac error")){
+                                Message message = Message.obtain();
+                                message.what = MainActivity.MAC_ERROR;
+                                handler.sendMessage(message);
+                            }
+                            else {
+                                Message message = Message.obtain();
+                                message.what = MainActivity.LOGIN_FAILED;
+                                Bundle bundle = new Bundle();
+                                //bundle.putInt("studentID", Integer.valueOf(jsonObject.getString("studentID")));
+                                message.setData(bundle);
+                                handler.sendMessage(message);
+                            }
+                        } catch (JSONException e) {
+                            Log.e("TAG", e.getMessage(), e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
 
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Log.e("cause", error.getCause().toString());
+                if(error.getCause() == null){
+                    Message message = Message.obtain();
+                    message.what = MainActivity.CONNECTION_REFUSED;
+                    handler.sendMessage(message);
+                    return;
+                }
+                if(error.getCause().toString().equals("java.net.ConnectException: Connection refused")){
+                    Message message = Message.obtain();
+                    message.what = MainActivity.CONNECTION_REFUSED;
+                    handler.sendMessage(message);
+                }
+                else if(error.getCause().toString().equals("java.net.ConnectException: Network is unreachable")){
+                    Message message = Message.obtain();
+                    message.what = MainActivity.NETWORK_UNREACHABLE;
+                    handler.sendMessage(message);
+                }
+                else{
+                    Message message = Message.obtain();
+                    message.what = MainActivity.UNKONWN_ERROR;
+                    handler.sendMessage(message);
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("courseID", String.valueOf(course.getCourseID()));
+                params.put("teacherID",String.valueOf(course.getTeacherID()));
+                params.put("courseName",String.valueOf(course.getCourseName()));
+                params.put("courseCreateDate",String.valueOf(course.getCreateDate()));
+                params.put("courseTotalNumber",String.valueOf(course.getTotalNumber()));
+                params.put("deleted", String.valueOf(course.isDeleted()));
+                return params;
+            }
+        };
+        request.setTag(tag);
+        requestQueue.add(request);
     }
 
+    /**
+     * Teacher login http request
+     * @param context
+     * @param handler
+     * @param accountNumber
+     * @param password
+     */
     public static void TeacherLoginRequest(final Context context, final Handler handler, final String accountNumber, final String password){
         String tag = "Login";
         RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());

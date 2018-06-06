@@ -3,18 +3,13 @@ package com.example.aprilcal.signsystem.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.aprilcal.signsystem.Busi.CourseBusi;
 import com.example.aprilcal.signsystem.R;
 import com.example.aprilcal.signsystem.vo.Course;
-
-import java.sql.Date;
 
 public class CreateCourseActivity extends AppCompatActivity {
 

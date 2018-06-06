@@ -3,11 +3,9 @@ package com.example.aprilcal.signsystem.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.example.aprilcal.signsystem.Adaper.CourseItemAdaper;
 import com.example.aprilcal.signsystem.Busi.CourseBusi;
 import com.example.aprilcal.signsystem.R;
@@ -35,7 +33,6 @@ public class MyCourseActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         refreshCourseList();
-        Log.d("onresume","invoked");
     }
 
     @Override

@@ -58,29 +58,6 @@
             android:id="@+id/course_total_number_edit_text" />
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="86dp">
-
-        <TextView
-            android:text="WiFi名称"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:textSize="24sp"
-            android:textAlignment="center"
-            android:gravity="center" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_weight="1"
-            android:textSize="24sp" />
-    </LinearLayout>
-
     <Button
         android:text="下一步"
         android:layout_width="match_parent"

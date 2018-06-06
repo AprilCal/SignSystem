@@ -3,17 +3,10 @@ package com.example.aprilcal.signsystem.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
-
-import com.example.aprilcal.signsystem.Busi.ElectiveBusi;
 import com.example.aprilcal.signsystem.Busi.SignInBusi;
 import com.example.aprilcal.signsystem.R;
-import com.example.aprilcal.signsystem.vo.Course;
-import com.example.aprilcal.signsystem.vo.Elective;
-import com.example.aprilcal.signsystem.vo.Sign;
 import com.example.aprilcal.signsystem.vo.SignIn;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 

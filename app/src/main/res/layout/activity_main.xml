@@ -97,7 +97,7 @@ tools:context="com.example.aprilcal.signsystem.Activity.MainActivity">
         android:textSize="24sp" />
 
     <Button
-        android:text="注册"
+        android:text="学生注册"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SignUpButton"
@@ -105,10 +105,10 @@ tools:context="com.example.aprilcal.signsystem.Activity.MainActivity">
         android:textSize="24sp" />
 
     <Button
-        android:text="跳过"
+        android:text="教师注册"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/PassButton"
+        android:id="@+id/main_teacher_sign_up_button"
         android:layout_weight="0.12"
         android:textSize="24sp" />
 </LinearLayout>

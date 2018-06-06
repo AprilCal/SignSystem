@@ -2,8 +2,6 @@ package com.example.aprilcal.signsystem.Client;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

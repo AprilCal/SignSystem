@@ -4,11 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.example.aprilcal.signsystem.vo.Course;
 import com.example.aprilcal.signsystem.vo.Elective;
-import com.example.aprilcal.signsystem.vo.SignIn;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +47,18 @@ public class ElectiveDao {
             values.put("deleted",0);
             db.insert(tableName,null,values);
         }
+    }
+
+    public static void deleteAllByCourseID(Context context, int courseID){
+        DBHelper dbHelper = new DBHelper(context,DBName,null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(tableName, "course_id = ?", new String[]{ String.valueOf(courseID)});
+    }
+
+    public static void deleteByCourseIDAndSchoolID(Context context, String schoolID, int courseID){
+        DBHelper dbHelper = new DBHelper(context,DBName,null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(tableName, "course_id = ? and school_id = ?", new String[]{ String.valueOf(courseID),schoolID});
     }
 
     public static void physicallyDelete(Context context, String schoolID, int courseID){

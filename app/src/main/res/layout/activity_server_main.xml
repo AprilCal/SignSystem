@@ -60,20 +60,13 @@
         android:layout_below="@+id/ll_home_navigation_top">
 
         <TextView
-            android:text="我的信息"
+            android:text="同步信息"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:textSize="24sp"
             android:gravity="center"
-            android:textAlignment="center" />
-
-        <TextView
-            android:text="回收站"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:id="@+id/teacher_synchronize_text_view" />
 
         <TextView
             android:text="退出账号"

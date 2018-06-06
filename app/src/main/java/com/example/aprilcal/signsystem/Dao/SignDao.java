@@ -4,11 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
-import com.example.aprilcal.signsystem.vo.Course;
 import com.example.aprilcal.signsystem.vo.Sign;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +50,10 @@ public class SignDao {
         return false;
     }
 
-    public static boolean delete(Context context,int singID){
-        return true;
+    public static void deleteBySignID(Context context,int signID){
+        DBHelper dbHelper = new DBHelper(context,DBName,null,1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(tableName, "sign_id = ?", new String[]{ String.valueOf(signID)});
     }
 
     //TODO refactor, return null when signList is empty;

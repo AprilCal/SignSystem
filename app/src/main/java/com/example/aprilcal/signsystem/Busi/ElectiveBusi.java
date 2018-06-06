@@ -37,4 +37,18 @@ public class ElectiveBusi {
     public static List<Elective> getAllElectiveByCourseID(Context context, int courseID){
         return ElectiveDao.selectAllElectiveByCourseID(context,courseID);
     }
+
+    public static void removeElectiveByCourseID(Context context, int courseID){
+        ElectiveDao.deleteAllByCourseID(context,courseID);
+    }
+
+    public static void retreat(Context context, String schoolID, int courseID){
+        ElectiveDao.deleteByCourseIDAndSchoolID(context,schoolID,courseID);
+    }
+
+    public static void batchRetreat(Context context, List<Elective> retreatList){
+        for(Elective elective : retreatList){
+            ElectiveDao.deleteByCourseIDAndSchoolID(context,elective.getSchoolID(),elective.getCourseID());
+        }
+    }
 }

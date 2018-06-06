@@ -7,7 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.aprilcal.signsystem.Busi.CourseBusi;
 import com.example.aprilcal.signsystem.R;
+import com.example.aprilcal.signsystem.vo.Course;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerMainActivity extends AppCompatActivity {
 
@@ -15,6 +21,7 @@ public class ServerMainActivity extends AppCompatActivity {
     private Button course_button;
 
     private TextView teacher_exit_text_veiw;
+    private TextView teacher_synchronize_text_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,7 @@ public class ServerMainActivity extends AppCompatActivity {
         create_button = (Button)findViewById(R.id.create_button);
         course_button = (Button)findViewById(R.id.course_button);
         teacher_exit_text_veiw = (TextView)findViewById(R.id.teacher_exit_text_view);
+        teacher_synchronize_text_view = (TextView)findViewById(R.id.teacher_synchronize_text_view);
 
         teacher_exit_text_veiw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,12 +49,17 @@ public class ServerMainActivity extends AppCompatActivity {
             }
         });
 
+        teacher_synchronize_text_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
         create_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
             {
                 Intent in = new Intent();
-                //in.putExtra("user_name",user_name);
                 in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.CreateCourseActivity");
                 startActivity(in);
             }
@@ -56,7 +69,6 @@ public class ServerMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent in = new Intent();
-                //in.putExtra("user_name",user_name);
                 in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.MyCourseActivity");
                 startActivity(in);
             }

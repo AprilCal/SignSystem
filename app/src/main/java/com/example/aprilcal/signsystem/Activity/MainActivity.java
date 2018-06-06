@@ -1,7 +1,6 @@
 package com.example.aprilcal.signsystem.Activity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -10,21 +9,17 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import com.example.aprilcal.signsystem.Dao.WiFiHelper;
 import com.example.aprilcal.signsystem.Dialog.DialogUtils;
 import com.example.aprilcal.signsystem.Network.NetworkHelper;
 import com.example.aprilcal.signsystem.R;
 import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String sharedPreferenceName = "identity";
 
+    private Button teacher_sign_up_button;
     private Button signin_button;
     private Button signup_button;
-    private Button pass_button;
 
     private EditText count_text;
     private EditText password_text;
@@ -58,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         signin_button = (Button) findViewById(R.id.SignInButton);
         signup_button = (Button) findViewById(R.id.SignUpButton);
-        pass_button = (Button) findViewById(R.id.PassButton);
+        teacher_sign_up_button = (Button) findViewById(R.id.main_teacher_sign_up_button);
 
         student_radiobutton = (RadioButton) findViewById(R.id.student_radiobutton);
         teacher_radiobutton = (RadioButton) findViewById(R.id.teacher_radiobutton);
@@ -110,11 +105,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //TODO remove pass button;
-        pass_button.setOnClickListener(new View.OnClickListener() {
+        teacher_sign_up_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                blackDialog = DialogUtils.createLoadingDialog(MainActivity.this, "登录中...");
+                Intent in = new Intent();
+                in.setClassName(getApplicationContext(), "com.example.aprilcal.signsystem.Activity.TeacherSignUpActivity");
+                startActivity(in);
             }
         });
     }

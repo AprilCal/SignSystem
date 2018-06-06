@@ -1,7 +1,5 @@
 package com.example.aprilcal.signsystem.vo;
 
-import java.sql.Date;
-
 /**
  * Created by AprilCal on 2018/4/7.
  */

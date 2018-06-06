@@ -13,7 +13,6 @@ import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,9 +25,6 @@ import com.example.aprilcal.signsystem.Adaper.InfoItemAdapter;
 import com.example.aprilcal.signsystem.Client.ConnectThread;
 import com.example.aprilcal.signsystem.Dao.WiFiHelper;
 import com.example.aprilcal.signsystem.R;
-
-import org.w3c.dom.Text;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -39,7 +35,6 @@ public class ClientMainActivity extends AppCompatActivity {
     private Switch wifi_switch;
     private ListView wifi_list_view;
     private TextView student_exit_text_view;
-    private TextView student_history_sign_text_view;
     private TextView student_bind_info_text_view;
 
     private Button sign_button;
@@ -75,7 +70,6 @@ public class ClientMainActivity extends AppCompatActivity {
 
         sign_button = (Button) findViewById(R.id.sign_button);
         student_exit_text_view = (TextView)findViewById(R.id.student_exit_text_view);
-        student_history_sign_text_view = (TextView)findViewById(R.id.student_history_sign_text_view);
         student_bind_info_text_view = (TextView)findViewById(R.id.student_bind_info_text_view);
 
         student_exit_text_view.setOnClickListener(new View.OnClickListener() {
@@ -127,13 +121,6 @@ public class ClientMainActivity extends AppCompatActivity {
             }
         });
 
-        student_history_sign_text_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "暂时不提供此功能", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         wifi_switch = (Switch) findViewById(R.id.wifi_switch);
         wifi_switch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +155,6 @@ public class ClientMainActivity extends AppCompatActivity {
                 {
                     //TODO abstract a sign operation;
                     if(wiFiHelper.connect(config)){
-                        //Toast.makeText(getApplicationContext(), "签到成功", Toast.LENGTH_SHORT).show();
                         new Thread(new Runnable() {
                             @Override
                             public void run() {

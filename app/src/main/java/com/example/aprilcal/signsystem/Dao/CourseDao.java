@@ -4,16 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.aprilcal.signsystem.Activity.LinkInfo;
 import com.example.aprilcal.signsystem.vo.Course;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.aprilcal.signsystem.Activity.ClientMainActivity.linkInfos;
 
 /**
  * Created by AprilCal on 2018/4/7.

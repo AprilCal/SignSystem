@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,8 +17,6 @@ import com.example.aprilcal.signsystem.Server.ServerLintenThread;
 import com.example.aprilcal.signsystem.vo.Elective;
 import com.example.aprilcal.signsystem.vo.Sign;
 import com.example.aprilcal.signsystem.vo.SignIn;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +41,8 @@ public class SignActivity extends AppCompatActivity {
     private Button start_sign_button;
     private Button end_sign_button;
     private WiFiHelper wiFiHelper;
+
+    private ServerLintenThread serverLintenThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,6 @@ public class SignActivity extends AppCompatActivity {
         start_sign_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //wiFiHelper.openAp("AprilCal","123456789", getApplicationContext());
                 int courseID = intent.getIntExtra("courseID",0);
                 int teacherID = intent.getIntExtra("teacherID",0);
                 long signDate = new Date().getTime();
@@ -79,7 +77,7 @@ public class SignActivity extends AppCompatActivity {
                 int backup = 0;
                 int deleted = 0;
                 signID = SignBusi.sign(getApplicationContext(),new Sign(courseID,teacherID,signDate,totalNumber,actualNumber,backup,deleted));
-                ServerLintenThread serverLintenThread = new ServerLintenThread(12345,handler);
+                serverLintenThread = new ServerLintenThread(12345,handler);
                 Thread listenThread = new Thread(serverLintenThread);
                 listenThread.start();
             }
@@ -91,6 +89,8 @@ public class SignActivity extends AppCompatActivity {
                 //wiFiHelper.closeAp();
                 //TODO shut all handle thread;
                 SignBusi.endSign(getApplicationContext(),signID,actualNumber);
+                serverLintenThread.cancel();
+
                 //TODO refactor
                 electiveList = ElectiveBusi.getAllElectiveByCourseID(getApplicationContext(),intent.getIntExtra("courseID",0));
                 for(Elective elective : electiveList){

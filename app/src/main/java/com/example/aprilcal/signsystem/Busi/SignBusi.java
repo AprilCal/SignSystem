@@ -21,4 +21,12 @@ public class SignBusi {
     public static List<Sign> getAllSignByCourseID(Context context, int courseID){
         return SignDao.selectAllSignByCourseID(context,courseID);
     }
+
+    public static void removeSignBySignID(Context context, int signID){
+        SignDao.deleteBySignID(context,signID);
+    }
+
+    public static void removeAllSignByCourseID(){
+
+    }
 }

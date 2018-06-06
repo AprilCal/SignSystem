@@ -78,15 +78,6 @@
             android:layout_below="@+id/ll_home_navigation_top">
 
             <TextView
-                android:text="历史签到"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textSize="24sp"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:id="@+id/student_history_sign_text_view" />
-
-            <TextView
                 android:text="绑定信息"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

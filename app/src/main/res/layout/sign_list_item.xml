@@ -9,17 +9,10 @@
     <TextView
         android:text="2018/3/30 91/87"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="51dp"
         android:id="@+id/sign_item_text_view"
-        android:layout_weight="1"
         android:textAlignment="center"
         android:textSize="24sp"
         android:gravity="center" />
-    <ImageView
-        app:srcCompat="@android:drawable/ic_menu_delete"
-        android:id="@+id/sign_list_del_image_view"
-        android:layout_gravity="center"
-        android:layout_height="35dp"
-        android:layout_width="80dp" />
 
 </LinearLayout>

@@ -6,7 +6,10 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,16 +18,13 @@ import com.example.aprilcal.signsystem.Adaper.ElectiveItemAdaper;
 import com.example.aprilcal.signsystem.Busi.ElectiveBusi;
 import com.example.aprilcal.signsystem.R;
 import com.example.aprilcal.signsystem.vo.Elective;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AddStudentActivity extends AppCompatActivity {
@@ -37,10 +37,49 @@ public class AddStudentActivity extends AppCompatActivity {
     private Button add_student_import_button;
 
     private List<Elective> electiveList;
+    private List<Elective> retreatList;
+
     private ElectiveItemAdaper electiveItemAdaper;
 
     private Intent intent;
     int courseID;
+
+    private void refreshElectiveList(){
+        electiveItemAdaper.notifyDataSetChanged();
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(1, 1000, 0, "删除成员");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        ContextMenu.ContextMenuInfo menuInfo = (ContextMenu.ContextMenuInfo) item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int id = (int)info.id;
+        switch (item.getItemId()) {
+            case 1000:
+                retreatList.add(electiveList.get(id));
+                electiveList.remove(id);
+                refreshElectiveList();
+                break;
+            default:
+                break;
+        }
+        boolean b = super.onContextItemSelected(item);
+        return super.onContextItemSelected(item);
+    }
+
+    private boolean isInfoEmpty(){
+        if(add_student_id_edit_text.getText().toString().equals("")){
+            return true;
+        }
+        if(add_student_name_edit_text.getText().toString().equals("")){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,35 +98,29 @@ public class AddStudentActivity extends AppCompatActivity {
 
         electiveList = new ArrayList<Elective>();
         electiveList = ElectiveBusi.getAllElectiveByCourseID(getApplicationContext(), courseID);
+        retreatList = new ArrayList<Elective>();
 
+        add_student_list_view.setOnCreateContextMenuListener(this);
         electiveItemAdaper = new ElectiveItemAdaper(AddStudentActivity.this,R.layout.elective_list_item, electiveList);
         add_student_list_view.setAdapter(electiveItemAdaper);
-
-
-
 
         add_student_add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String schoolID = add_student_id_edit_text.getText().toString();
-                String studentName = add_student_name_edit_text.getText().toString();
-                addElectiveToListWithNotification(new Elective(0,schoolID,courseID,studentName,0,0));
-                /*for(Elective elective : electiveList){
-                    if(elective.getSchoolID().equals(schoolID)){
-                        Toast.makeText(getApplicationContext(), "该学号重复", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+                if(!isInfoEmpty()){
+                    String schoolID = add_student_id_edit_text.getText().toString();
+                    String studentName = add_student_name_edit_text.getText().toString();
+                    addElectiveToListWithNotification(new Elective(0,schoolID,courseID,studentName,0,0));
                 }
-                electiveList.add(new Elective(0,schoolID,courseID,studentName,0,0));
-                electiveItemAdaper.notifyDataSetChanged();*/
             }
         });
 
         add_student_end_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ElectiveBusi.batchRetreat(getApplicationContext(),retreatList);
                 ElectiveBusi.elect(getApplicationContext(),electiveList);
-                Toast.makeText(getApplicationContext(), "添加人员成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -98,8 +131,7 @@ public class AddStudentActivity extends AppCompatActivity {
                 intent.setType("*/*");
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 try {
-                    startActivityForResult(Intent.createChooser(intent, "请选择导入方式"),
-                            0);
+                    startActivityForResult(Intent.createChooser(intent, "请选择导入方式"),0);
                 } catch (android.content.ActivityNotFoundException ex) {
                 }
             }
@@ -114,24 +146,20 @@ public class AddStudentActivity extends AppCompatActivity {
             }
         }
         electiveList.add(elective);
-        electiveItemAdaper.notifyDataSetChanged();
+        refreshElectiveList();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
-            Toast.makeText(getApplicationContext(), "出错了嘻嘻", Toast.LENGTH_SHORT).show();
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
         if (requestCode == 0) {
             Uri uri = data.getData();
-
-            Log.i("------->", uri.getPath());
             File f = new File(uri.getPath());
             int length = (int) f.length();
             String path = "/storage/emulated/0/"+uri.getPath().substring(16);
-            Log.i("------->", path);
-
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path),"GBK"));
                 String line = null;

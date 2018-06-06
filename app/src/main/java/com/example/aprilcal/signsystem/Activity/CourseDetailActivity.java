@@ -1,24 +1,21 @@
 package com.example.aprilcal.signsystem.Activity;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.example.aprilcal.signsystem.Adaper.SignItemAdaper;
 import com.example.aprilcal.signsystem.Busi.CourseBusi;
+import com.example.aprilcal.signsystem.Busi.ElectiveBusi;
 import com.example.aprilcal.signsystem.Busi.SignBusi;
+import com.example.aprilcal.signsystem.Busi.SignInBusi;
 import com.example.aprilcal.signsystem.R;
 import com.example.aprilcal.signsystem.vo.Course;
 import com.example.aprilcal.signsystem.vo.Sign;
@@ -43,6 +40,21 @@ public class CourseDetailActivity extends AppCompatActivity {
         course.setTotalNumber(intent.getIntExtra("totalNumber",0));
         course.setBackup(intent.getIntExtra("backup",0));
         course.setCreateDate(intent.getIntExtra("createDate",0));
+    }
+
+    private void refreshSignList(){
+        List<Sign> newSignList = SignBusi.getAllSignByCourseID(getApplicationContext(),course.getCourseID());
+        signList.clear();
+        for(Sign sign : newSignList){
+            signList.add(sign);
+        }
+        signItemAdaper.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        refreshSignList();
     }
 
     @Override
@@ -73,6 +85,8 @@ public class CourseDetailActivity extends AppCompatActivity {
         signItemAdaper = new SignItemAdaper(CourseDetailActivity.this,R.layout.sign_list_item,signList);
         sign_list_view = (ListView) findViewById(R.id.sign_list_view);
         sign_list_view .setAdapter(signItemAdaper);
+        sign_list_view.setOnCreateContextMenuListener(this);
+
         Toast.makeText(getApplicationContext(), String.valueOf(signList.size()), Toast.LENGTH_SHORT).show();
 
         sign_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,6 +105,31 @@ public class CourseDetailActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(1, 1000, 0, "删除签到");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        ContextMenu.ContextMenuInfo menuInfo = (ContextMenu.ContextMenuInfo) item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int id = (int)info.id;
+        int signID = signList.get(id).getSignID();
+        switch (item.getItemId()) {
+            case 1000:
+                SignBusi.removeSignBySignID(getApplicationContext(),signID);
+                SignInBusi.removeAllSignInBySignID(getApplicationContext(),signID);
+                refreshSignList();
+                Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        boolean b = super.onContextItemSelected(item);
+        return super.onContextItemSelected(item);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,15 +142,25 @@ public class CourseDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.teacher_course_sync_item:
+
                 Toast.makeText(getApplicationContext(),"同步成功",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.teacher_course_fresh_item:
+                refreshSignList();
                 Toast.makeText(getApplicationContext(),"刷新成功",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.teacher_course_del_item:
+                /* Delete all sign & sign in inside the course.*/
+                List<Sign> toBeDeletedSignList = SignBusi.getAllSignByCourseID(getApplicationContext(),course.getCourseID());
+                for(Sign sign : toBeDeletedSignList){
+                    SignInBusi.removeAllSignInBySignID(getApplicationContext(),sign.getSignID());
+                    SignBusi.removeSignBySignID(getApplicationContext(),sign.getSignID());
+                }
+                ElectiveBusi.removeElectiveByCourseID(getApplicationContext(),course.getCourseID());
                 CourseBusi.deleteCourseByCourseID(getApplicationContext(),course.getCourseID());
                 Toast.makeText(getApplicationContext(),"删除成功",Toast.LENGTH_SHORT).show();
                 finish();
+                return true;
             case R.id.teacher_course_member_item:
                 Intent in = new Intent();
                 in.putExtra("courseID",course.getCourseID());

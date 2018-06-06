@@ -16,12 +16,22 @@ public class ServerLintenThread implements Runnable {
     private int port;
     private Socket socket;
 
+    private volatile boolean cancelled = false;
+
+    public void cancel() {
+        cancelled = true;
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ServerLintenThread(int port, Handler handler) {
         this.port = port;
         this.handler = handler;
         try {
             serverSocket = new ServerSocket(port);
-            Log.d("","service start");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -29,7 +39,7 @@ public class ServerLintenThread implements Runnable {
 
     @Override
     public void run(){
-        while (true){
+        while (!cancelled){
             try {
                 Log.d("server start listen:",String.valueOf(12345));
                 socket = serverSocket.accept();

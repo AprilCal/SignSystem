@@ -1,10 +1,7 @@
 package com.example.aprilcal.signsystem.Dao;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.DhcpInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -12,19 +9,15 @@ import android.net.wifi.WifiManager;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Objects;
-
 import static android.content.Context.WIFI_SERVICE;
 
 /**
@@ -120,24 +113,10 @@ public class WiFiHelper {
         WifiConfiguration config = new WifiConfiguration();
         config.SSID = "AprilCal";
         config.networkId = 1;
-        /*config.allowedAuthAlgorithms.clear();
-        config.allowedGroupCiphers.clear();
-        config.allowedKeyManagement.clear();
-        config.allowedPairwiseCiphers.clear();
-        config.allowedProtocols.clear();*/
-
-
         config.preSharedKey = "123456789";
         config.hiddenSSID = false;
         config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-        /*
-            This was stupid;
-            KeyMgmt was hidden & WPA2_PSK = 4;
-            Under MIUI, WPA2_PSK is of value 6;
-            STUPID
-         */
-        //config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
         config.allowedKeyManagement.set(6);
         config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
         config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
@@ -157,27 +136,13 @@ public class WiFiHelper {
             Log.e("wifi:", e.getMessage());
         }
 
-        //wifiManager.setWifiEnabled(false);
-
         try {
             Method method1 = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
             method1.invoke(wifiManager, null, true);
             //vThread.sleep(200);
         } catch (Exception e) {
-            //Log.e("wifi:", e.getMessage());
             return false;
         }
-
-
-        //config.status = WifiConfiguration.Status.ENABLED;
-        /*
-        try {
-            Method method = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, Boolean.TYPE);
-
-            return (Boolean)method.invoke(wifiManager, config, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
         return true;
     }
 

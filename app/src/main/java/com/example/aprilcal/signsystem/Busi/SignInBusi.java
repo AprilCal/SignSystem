@@ -1,10 +1,8 @@
 package com.example.aprilcal.signsystem.Busi;
 
 import android.content.Context;
-
 import com.example.aprilcal.signsystem.Dao.SignInDao;
 import com.example.aprilcal.signsystem.vo.SignIn;
-
 import java.util.List;
 
 /**
@@ -22,6 +20,10 @@ public class SignInBusi {
 
     public static void signIn(Context context, List<SignIn> signInList){
         SignInDao.insert(context, signInList);
+    }
+
+    public static void removeAllSignInBySignID(Context context, int signID){
+        SignInDao.deleteAllBySignID(context, signID);
     }
 
     public static void signIn(Context context, SignIn signIn){
